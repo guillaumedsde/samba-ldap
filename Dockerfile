@@ -31,6 +31,7 @@ COPY rootfs/ /
 EXPOSE 445
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-  SAMBA_CONFIG=/config/smb.conf
+  SAMBA_CONFIG=/etc/samba/smb.conf \
+  NSLCD_CONFIG=/etc/nslcd.conf
 
 ENTRYPOINT ["/init"]

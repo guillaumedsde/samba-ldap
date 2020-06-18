@@ -2,4 +2,4 @@
 
 samba --version
 
-exec samba -i --configfile=${SAMBA_CONFIG}
+exec samba -i
