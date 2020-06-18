@@ -2,4 +2,4 @@
 
 samba --version
 
-exec smbd -i
+exec smbd -i --log-stdout --debuglevel=5

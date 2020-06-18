@@ -2,4 +2,4 @@
 
 nslcd --version
 
-exec nslcd --nofork
+exec nslcd --nofork --debug
