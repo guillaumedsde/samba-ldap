@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+
+samba --version
+
+exec samba -i --configfile=${SAMBA_CONFIG}
