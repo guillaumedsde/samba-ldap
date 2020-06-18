@@ -7,6 +7,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
 ARG S6_VERSION=v2.0.0.1
 
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+  SAMBA_CONFIG=/etc/samba/smb.conf \
+  NSLCD_CONFIG=/etc/nslcd.conf
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   samba \
@@ -24,14 +28,12 @@ RUN apt-get update \
   && rm "s6.tgz" \
   && apt-get remove --purge -y wget \
   && apt-get --purge -y autoremove \
-  && rm -rf "/var/lib/apt/lists/*"
+  && rm -rf "/var/lib/apt/lists/*" \
+  && rm "${SAMBA_CONFIG}" \
+  && rm "${NSLCD_CONFIG}"
 
 COPY rootfs/ /
 
 EXPOSE 445
-
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-  SAMBA_CONFIG=/etc/samba/smb.conf \
-  NSLCD_CONFIG=/etc/nslcd.conf
 
 ENTRYPOINT ["/init"]
