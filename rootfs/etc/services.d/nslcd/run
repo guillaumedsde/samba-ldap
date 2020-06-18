@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+
+nslcd --version
+
+exec nslcd --nofork
