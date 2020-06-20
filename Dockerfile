@@ -34,6 +34,6 @@ RUN apt-get update \
 
 COPY rootfs/ /
 
-EXPOSE 445
+EXPOSE 139 445
 
 ENTRYPOINT ["/init"]
