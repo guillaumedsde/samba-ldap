@@ -48,6 +48,19 @@ services:
     image: "guillaumedsde/guillaumedsde/samba-ldap:latest"
 ```
 
+## 🖥️ Supported architectures
+
+This container is built for many hardware platforms (yes, even ppc64le whoever uses that... 😉):
+
+- linux/386
+- linux/amd64
+- linux/arm/v6
+- linux/arm/v7
+- linux/arm64
+- linux/ppc64le
+
+All you have to do is use a recent version of docker and it will pull the appropriate version of the image [guillaumedsde/samba-ldap](https://hub.docker.com/repository/docker/guillaumedsde/samba-ldap) from the docker hub.
+
 ## 🙏 Credits
 
 A couple of projects really helped me out while developing this container:
