@@ -6,6 +6,15 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
 ARG S6_VERSION=v2.0.0.1
 
+LABEL org.label-schema.build-date=$BUILD_DATE \
+  org.label-schema.name="samba-ldap" \
+  org.label-schema.description="Debian bullseyes based docker image for SAMBA with ldap authentication" \
+  org.label-schema.url="https://guillaumedsde.gitlab.io/samba-ldap/" \
+  org.label-schema.vcs-ref=$VCS_REF \
+  org.label-schema.vcs-url="https://github.com/guillaumedsde/samba-ldap" \
+  org.label-schema.vendor="guillaumedsde" \
+  org.label-schema.schema-version="1.0"
+
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
   SAMBA_CONFIG=/etc/samba/smb.conf \
   NSLCD_CONFIG=/etc/nslcd.conf

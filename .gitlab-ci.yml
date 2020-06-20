@@ -1,0 +1,72 @@
+stages:
+  - build
+  - deploy
+
+build-containers:
+  image: docker:latest
+  stage: build
+  services:
+    - name: "docker:dind"
+      command: ["--experimental"]
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_BUILDKIT: 1
+    DOCKER_CLI_EXPERIMENTAL: enabled
+    BUILDX_URL: https://github.com/docker/buildx/releases/latest/download/buildx-v0.4.1.linux-amd64
+    BUILDX_BUILDER: builder
+    BUILDX_PLATFORM: linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6,linux/ppc64le
+  before_script:
+    - chmod +x ./build/prepare_builder.sh
+    - . ./build/prepare_builder.sh
+  script:
+    - chmod +x ./build/build.sh
+    - . ./build/build.sh
+  only:
+    changes:
+      - Dockerfile
+      - rootfs/**/*
+      - .gitlab-ci.yml
+      - build/**/*
+
+# the 'pages' job will deploy and build your site to the 'public' path
+dockerhub-readme:
+  stage: deploy
+  variables:
+    README_PATH: ./README.md
+  image:
+    name: sheogorath/readme-to-dockerhub:latest
+    entrypoint: [""]
+  script:
+    - node /app/index.js
+  only:
+    refs:
+      - master
+    changes:
+      - README.md
+      - .gitlab-ci.yml
+
+# the 'pages' job will deploy and build your site to the 'public' path
+pages:
+  stage: deploy
+  # requiring the environment of NodeJS 10
+  image: node:10
+  # add 'node_modules' to cache for speeding up builds
+  cache:
+    paths:
+      - node_modules/ # Node modules and dependencies
+  before_script:
+    - npm install gitbook-cli -g # install gitbook
+    - gitbook fetch 3.2.3 # fetch final stable version
+    - gitbook install # add any requested plugins in book.json
+  script:
+    - gitbook build . public # build to public path
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 week
+  only:
+    refs:
+      - master
+    changes:
+      - README.md
+      - .gitlab-ci.yml
