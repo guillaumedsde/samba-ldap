@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "${CI_COMMIT_REF_NAME}" = "master" ]; then
-    TAGS=" -t ${CI_REGISTRY_USER}/samba-ldap:${VERSION} -t ${CI_REGISTRY_USER}/samba-ldap:latest "
+    TAGS=" -t ${CI_REGISTRY_USER}/samba-ldap:latest "
 else
     # cleanup branch name
     BRANCH="$(echo "${CI_COMMIT_REF_NAME}" | tr / _)"
