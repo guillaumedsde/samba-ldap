@@ -1,6 +1,5 @@
-ARG DEBIAN_VERSION=buster
 
-FROM debian:${DEBIAN_VERSION}-slim
+FROM debian:bullseye-slim
 
 ARG DEBIAN_VERSION
 ARG DEBIAN_FRONTEND=noninteractive 
