@@ -1,5 +1,0 @@
-#!/usr/bin/with-contenv sh
-
-echo "libnss-ldapd libnss-ldapd/nsswitch string 'passwd group shadow'" | debconf-set-selections
-echo "libnss-ldapd libnss-ldapd/clean_nsswitch boolean true" | debconf-set-selections
-DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true dpkg-reconfigure libnss-ldapd
