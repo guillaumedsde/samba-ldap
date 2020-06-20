@@ -1,120 +1,57 @@
-andrespp/samba-ldap
-===================
+# 🐋 + 📁 + 👤 guillaumedsde/samba-ldap
 
-# Introduction
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/guillaumedsde/samba-ldap)](https://gitlab.com/guillaumedsde/samba-ldap/-/pipelines)
+[![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/guillaumedsde/samba-ldap)](https://gitlab.com/guillaumedsde/samba-ldap/-/pipelines)
+[![Website](https://img.shields.io/website?label=documentation&url=https%3A%2F%2Fguillaumedsde.gitlab.io%2Fsamba-ldap%2F)](https://guillaumedsde.gitlab.io/samba-ldap/)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/guillaumedsde/samba-ldap?label=version)](https://github.com/guillaumedsde/samba-ldap/releases)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9a0f16575d634e449a5b31c1e7439779)](https://www.codacy.com/manual/guillaumedsde/samba-ldap?utm_source=gitlab.com&utm_medium=referral&utm_content=guillaumedsde/samba-ldap&utm_campaign=Badge_Grade)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/guillaumedsde/samba-ldap)](https://hub.docker.com/r/guillaumedsde/samba-ldap)
+[![Docker Pulls](https://img.shields.io/docker/pulls/guillaumedsde/samba-ldap)](https://hub.docker.com/r/guillaumedsde/samba-ldap)
+[![GitHub stars](https://img.shields.io/github/stars/guillaumedsde/samba-ldap?label=Github%20stars)](https://github.com/guillaumedsde/samba-ldap)
+[![GitHub watchers](https://img.shields.io/github/watchers/guillaumedsde/samba-ldap?label=Github%20Watchers)](https://github.com/guillaumedsde/samba-ldap)
+[![Docker Stars](https://img.shields.io/docker/stars/guillaumedsde/samba-ldap)](https://hub.docker.com/r/guillaumedsde/samba-ldap)
+[![GitHub](https://img.shields.io/github/license/guillaumedsde/samba-ldap)](https://github.com/guillaumedsde/samba-ldap/blob/master/LICENSE.md)
 
-Docker image for SAMBA with ldap authentication.
+Debian bullseyes based docker image for SAMBA with ldap authentication.
 
-This image is based on `andrespp/debian-ldap`.
+This image is based on the work of [`andrespp/docker-samba-ldap`](https://www.github.com/andrespp/docker-samba-ldap)
 
-# Quick start
+## 🏁 How to Run
 
-The easiest way to try this image is via docker compose:
+### `docker run`
 
+```bash
+$ docker run  -v /path/to/nslcd.conf:/etc/nslcd.conf:ro \
+              -v /path/to/smb.conf:/etc/samba/smb.conf:ro \
+              -v /etc/localtime:/etc/localtime:ro \
+              -e SAMBA_LDAP_PASSWORD=${LDAP_ADMIN_PASSWORD} \
+              -p 139:139 \
+              -p 445:445 \
+              guillaumedsde/guillaumedsde/samba-ldap:latest
 ```
-version: '3.1'
 
+### `docker-compose.yml`
+
+```yaml
+version: "3.3"
 services:
-  debian:
-    image: andrespp/samba-ldap
-    environment:
-     - SAMBA_LDAP_PASSWORD=your-pass
-    ports:
-     - "445:445"
+  guillaumedsde:
     volumes:
-     - ./sandbox/libnss-ldap.conf:/etc/libnss-ldap.conf:ro
-     - ./sandbox/smb.conf:/etc/samba/smb.conf:ro
-     - ./sandbox/Documentos:/mnt/Documentos
+      - "/path/to/nslcd.conf:/etc/nslcd.conf:ro"
+      - "/path/to/smb.conf:/etc/samba/smb.conf:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - "SAMBA_LDAP_PASSWORD=${LDAP_ADMIN_PASSWORD}"
+    ports:
+      - "139:139"
+      - "445:445"
+    image: "guillaumedsde/guillaumedsde/samba-ldap:latest"
 ```
 
-Where `./sandbox/libnss-ldap.conf`:
+## 🙏 Credits
 
-```
-base dc=base
-uri ldap://192.168.1.1/
-ldap_version 3
-binddn uid=linux,ou=system,dc=base
-bindpw secret-password
-```
+A couple of projects really helped me out while developing this container:
 
-And `./sandbox/smb.conf`:
-
-```
-[global]
-workgroup = MyWorkgroup
-server string = My fileserver
-netbios name = myhostname
-dns proxy = no
-wide links = no
-log level = 4
-map untrusted to domain = no
-client lanman auth = Yes
-security = user
-encrypt passwords = true
-# password database backend ======================================
-	passdb backend = ldapsam:ldap://192.168.1.1
-	ldap passwd sync     = yes
-	ldap admin dn        =   cn=admin,dc=base
-	ldap suffix          =   dc=base
-	ldap user suffix     =   ou=users
-	ldap machine suffix  =   ou=computers
-	ldap group suffix    =   ou=groups
-	ldap idmap suffix    =   ou=idmap
-	ldap delete dn       =   yes
-	ldap ssl             =   off
-#=================================================================
-obey pam restrictions = yes
-invalid users = root
-unix password sync = yes
-passwd program = /usr/bin/passwd %u
-passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
-pam password change = yes
-map to guest = bad user
-
-socket options = TCP_NODELAY
-usershare allow guests = yes
-
-#======================= Share Definitions =======================
-
-[Documentos]
-   comment = Shared Documents
-   path = /mnt/Documentos
-   browseable = yes
-   guest ok = no
-   read only = no
-   create mask = 0770
-   directory mask = 0770
-   map acl inherit = Yes
-   inherit permissions = yes
-```
-
-And `./sandbox/Documentos` is the path you want to share
-
-```bash
-$ docker-compose up
-```
-
-Alternativelly, you can use `docker container run`:
-
-```bash
-$ docker container run --rm -d -p 445:445 --name samba \
-	-v $(pwd)/sandbox/libnss-ldap.conf:/etc/libnss-ldap.conf:ro \
-	-v $(pwd)/sandbox/smb.conf:/etc/samba/smb.conf:ro \
-        -v $(pwd)/sandbox/Documentos:/mnt/Documentos \
-	-e SAMBA_LDAP_PASSWORD=your-pass andrespp/samba-ldap
-```
-
-
-# Environment Variables
-
-This image uses several environment variables in order to control its behavior,
-and some of them may be required
-
-`SAMBA_LDAP_PASSWORD` *Required
-
-Password for the LDAP ADMIN DN set in `smb.conf` in order to bind the directory.
-
-# Issues
-
-If you have any problems with or questions about this image, please contact me
-through a [GitHub issue](https://github.com/andrespp/docker-samba-ldap/issues).
+- 💽 [`andrespp/docker-samba-ldap`](https://www.github.com/andrespp/docker-samba-ldap) for helpful inspiration
+- 🏁 [s6-overlay](https://github.com/just-containers/s6-overlay) A simple, relatively small yet powerful set of init script for managing processes (especially in docker containers)
+- 🐋 The [Docker](https://github.com/docker) project (of course)
