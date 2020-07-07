@@ -2,9 +2,8 @@
 
 nslcd --version
 
-OPTS=""
-if [ -z "${DEBUG}" ]; then
-    OPTS="--debug"
+if [ ! -z "${DEBUG}" ]; then
+    OPTS="${OPTS:-} --debug"
 fi
 
-exec nslcd --nofork "${OPTS}"
+exec nslcd --nofork ${OPTS:-}

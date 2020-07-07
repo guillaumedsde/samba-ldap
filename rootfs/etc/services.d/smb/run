@@ -2,9 +2,8 @@
 
 samba --version
 
-OPTS=""
-if [ -z "${DEBUG}" ]; then
-    OPTS="--debuglevel=5"
+if [ ! -z "${DEBUG}" ]; then
+    OPTS="${OPTS:-} --debuglevel=5"
 fi
 
-exec smbd --foreground --no-process-group --log-stdout "${OPTS}"
+exec smbd --foreground --no-process-group --log-stdout ${OPTS:-}
