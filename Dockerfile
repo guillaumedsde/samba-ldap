@@ -4,7 +4,7 @@ FROM debian:bullseye-slim
 ARG DEBIAN_VERSION
 ARG DEBIAN_FRONTEND=noninteractive 
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
-ARG S6_VERSION=v2.0.0.1
+ARG S6_VERSION=v2.2.0.3
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.name="samba-ldap" \
