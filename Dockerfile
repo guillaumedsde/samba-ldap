@@ -24,6 +24,7 @@ RUN apt-get update \
   samba \
   libnss-ldapd \
   wget \
+  samba-vfs-modules\
   && ARCH="$(uname -m)" \
   && if [ "${ARCH}" = "x86_64" ]; then S6_ARCH=amd64; \
   elif [ "${ARCH}" = "i386" ]; then S6_ARCH=X86; \
