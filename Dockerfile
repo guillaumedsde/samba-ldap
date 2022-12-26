@@ -40,6 +40,7 @@ RUN apt-get update \
   && rm "s6.tgz" \
   && apt-get remove --purge -y wget debconf-utils \
   && apt-get --purge -y autoremove \
+  && apt-get clean \
   && rm -rf "/var/lib/apt/lists/*" \
   && rm "${SAMBA_CONFIG}" \
   && rm "${NSLCD_CONFIG}"
