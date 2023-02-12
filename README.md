@@ -1,10 +1,5 @@
 # 🐋 + 📁 + 👤 guillaumedsde/samba-ldap
 
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/guillaumedsde/samba-ldap)](https://gitlab.com/guillaumedsde/samba-ldap/-/pipelines)
-[![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/guillaumedsde/samba-ldap)](https://gitlab.com/guillaumedsde/samba-ldap/-/pipelines)
-[![Website](https://img.shields.io/website?label=documentation&url=https%3A%2F%2Fguillaumedsde.gitlab.io%2Fsamba-ldap%2F)](https://guillaumedsde.gitlab.io/samba-ldap/)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/guillaumedsde/samba-ldap?label=version)](https://github.com/guillaumedsde/samba-ldap/releases)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/6bc4aed4e9a64e5ca3e86a39c8fe2a34)](https://www.codacy.com/manual/guillaumedsde/samba-ldap?utm_source=gitlab.com&utm_medium=referral&utm_content=guillaumedsde/samba-ldap&utm_campaign=Badge_Grade)
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/guillaumedsde/samba-ldap)](https://hub.docker.com/r/guillaumedsde/samba-ldap)
 [![Docker Pulls](https://img.shields.io/docker/pulls/guillaumedsde/samba-ldap)](https://hub.docker.com/r/guillaumedsde/samba-ldap)
 [![GitHub stars](https://img.shields.io/github/stars/guillaumedsde/samba-ldap?label=Github%20stars)](https://github.com/guillaumedsde/samba-ldap)
