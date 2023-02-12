@@ -1,10 +1,5 @@
 # 🐋 + 📁 + 👤 guillaumedsde/samba-ldap
 
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/guillaumedsde/samba-ldap)](https://gitlab.com/guillaumedsde/samba-ldap/-/pipelines)
-[![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/guillaumedsde/samba-ldap)](https://gitlab.com/guillaumedsde/samba-ldap/-/pipelines)
-[![Website](https://img.shields.io/website?label=documentation&url=https%3A%2F%2Fguillaumedsde.gitlab.io%2Fsamba-ldap%2F)](https://guillaumedsde.gitlab.io/samba-ldap/)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/guillaumedsde/samba-ldap?label=version)](https://github.com/guillaumedsde/samba-ldap/releases)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9a0f16575d634e449a5b31c1e7439779)](https://www.codacy.com/manual/guillaumedsde/samba-ldap?utm_source=gitlab.com&utm_medium=referral&utm_content=guillaumedsde/samba-ldap&utm_campaign=Badge_Grade)
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/guillaumedsde/samba-ldap)](https://hub.docker.com/r/guillaumedsde/samba-ldap)
 [![Docker Pulls](https://img.shields.io/docker/pulls/guillaumedsde/samba-ldap)](https://hub.docker.com/r/guillaumedsde/samba-ldap)
 [![GitHub stars](https://img.shields.io/github/stars/guillaumedsde/samba-ldap?label=Github%20stars)](https://github.com/guillaumedsde/samba-ldap)
@@ -14,7 +9,7 @@
 
 Debian bullseyes based docker image for SAMBA with ldap authentication.
 
-This image is based on the work of [`andrespp/docker-samba-ldap`](https://www.github.com/andrespp/docker-samba-ldap)
+This image is based on the work of [`andrespp/docker-samba-ldap`](https://www.github.com/andrespp/docker-samba-ldap).
 
 ## 🏁 How to Run
 
@@ -47,6 +42,19 @@ services:
       - "445:445"
     image: "guillaumedsde/guillaumedsde/samba-ldap:latest"
 ```
+
+## 🖥️ Supported architectures
+
+This container is built for many hardware platforms (yes, even ppc64le whoever uses that... 😉):
+
+- linux/386
+- linux/amd64
+- linux/arm/v6
+- linux/arm/v7
+- linux/arm64
+- linux/ppc64le
+
+All you have to do is use a recent version of docker and it will pull the appropriate version of the image [guillaumedsde/samba-ldap](https://hub.docker.com/repository/docker/guillaumedsde/samba-ldap) from the docker hub.
 
 ## 🙏 Credits
 
